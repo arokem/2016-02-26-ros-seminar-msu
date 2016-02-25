@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title> Making your data public ("sharing") </title>
+
+		<meta name="description" content="Presentation at ILABS 2015/11/19.">
+		<meta name="author" content="Ariel Rokem">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/custom.css" id="theme">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!-- Draw arrows -->
+		<script>
+        function canvas_arrow_two_heads(context, fromx, fromy, tox, toy){
+        var headlen = 10;   // length of head in pixels
+        var angle = Math.atan2(toy-fromy,tox-fromx);
+        context.moveTo(fromx, fromy);
+        context.lineTo(fromx+headlen*Math.cos(angle+Math.PI/6),fromy+headlen*Math.sin(angle+Math.PI/6));
+        context.moveTo(fromx, fromy);
+        context.lineTo(fromx+headlen*Math.cos(angle-Math.PI/6),fromy+headlen*Math.sin(angle-Math.PI/6));
+	    context.moveTo(fromx, fromy);
+        context.lineTo(tox, toy);
+        context.lineTo(tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6));
+        context.moveTo(tox, toy);
+        context.lineTo(tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6));}
+       	</script>
+
+		<script>
+        function canvas_arrow(context, fromx, fromy, tox, toy){
+        var headlen = 10;   // length of head in pixels
+        var angle = Math.atan2(toy-fromy,tox-fromx);
+        context.moveTo(fromx, fromy);
+        context.lineTo(tox, toy);
+        context.lineTo(tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6));
+        context.moveTo(tox, toy);
+        context.lineTo(tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6));}
+        </script>
+
+
+	<body>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+			<section>
+				<h2>The elements of reproducible open science</h2>
+        <p><a href="http://arokem.org">Ariel Rokem</a>, <a href="http://escience.washington.edu">University of Washington eScience Institute</a> </p>
+        <p class="fragment"><small> Follow along at <t> <a href="http://arokem.github.io/2016-02-26-ros-seminar-msu/"> </t>http://arokem.github.io/2016-02-26-ros-seminar-msu</small></a></p>
+      </section>
+
+			<section>
+			        <img src="images/eScience_Logo_PMS.png" alt="The eScience Institute" align="middle" style="background:none; border:none; box-shadow:none;">
+			      	<div class="fragment">
+			        <img src="images/sponsors.png" alt="DSE sponsors" align="middle" style="background:none; border:none; box-shadow:none;">
+			      	</div>
+			</section>
+
+			<section>
+				<h2> <em>Data Science</em>? </h2>
+					<p class="fragment">
+						Programming and software engineering
+					</p>
+
+					<p class="fragment">
+						Data management
+					</p>
+
+					<p class="fragment">
+						Statistics and machine learning
+					</p>
+
+					<p class="fragment">
+						Data visualization and communication
+					</p>
+
+					<p class="fragment">
+						A focus on reproducibility and openess
+					</p>
+				</section>
+
+
+				<section>
+					<h2> The elements of reproducible open research </h2>
+					<p class="fragment">
+						Automation
+					</p>
+					<p class="fragment">
+						Provenance tracking
+					</p>
+					<p class="fragment">
+						Version control
+					</p>
+					<p class="fragment">
+						Availability of data and code
+					<p>
+					<p class="fragment">
+						Open publication
+					</p>
+				</section>
+
+	    	<section>
+	    		<h3>Normal behavior is supported by brain connectivity</h3>
+				<img src="./images/OldenDays.png" height="505" style="background:none; border:none; box-shadow:none;">
+				<div style="position: absolute; left: 500px;" >
+					<small>Image from Catani and ffytche (2015)</small>
+				</div>
+	    	</section>
+
+	    	<section>
+				<img src="./images/optic-radiation-postmortem.png" height="505" style="background:none; border:none; box-shadow:none;">
+	    	</section>
+
+	    	<section>
+	    		<h2>Not just passive cables</h2>
+		    	<p class="fragment">Brain connections change with development</p>
+				<p class="fragment">Individual differences account for differences in behaviour</p>
+		    	<p class="fragment">Adapt with learning</p>
+				<p class="fragment">This has clinical significance</p>
+	    	</section>
+
+			<section>
+			<h3> Magnetic Resonance Imaging (MRI)</h3>
+	    	<p class="fragment">Neural activity: functional MRI</p>
+		    <p class="fragment">Anatomy: structural MRI</p>
+		    <p class="fragment">...</p>
+			<p class="fragment">Brain connectivity: diffusion MRI</p>
+	    	</section>
+
+	    	<section>
+				<div style="position: absolute; left: 100px;">
+				<img src="./images/optic-radiation-postmortem.png" height="505" style="background:none; border:none; box-shadow:none;">
+				</div>
+
+				<div class="fragment" style="position: absolute; left: 500px;">
+
+				<img src="./images/nerve-fiber.png" height="505" style="background:none; border:none; box-shadow:none;">
+				</div>
+
+	    	</section>
+			<section>
+				<h2>Diffusion MRI</h2>
+				<div class = "fragment fade-in" style="position: absolute">
+				<canvas id="arrows-iso-horiz" width="1000" height="1000">
+				</canvas>
+				    <script>
+				      context = document.getElementById('arrows-iso-horiz').getContext("2d");
+				      context.beginPath();
+					  canvas_arrow_two_heads(context, 390, 450, 590, 450);
+				      context.lineWidth = 2;
+				      context.stroke();
+				    </script>
+				  </div>
+			<div class = "fragment fade-in" style="position: absolute">
+				<canvas id="arrows-iso-vert" width="1000" height="1000">
+				</canvas>
+				    <script>
+				      context = document.getElementById('arrows-iso-vert').getContext("2d");
+				      context.beginPath();
+					  canvas_arrow_two_heads(context, 250, 350, 250, 150);
+					  context.lineWidth = 2;
+				      context.stroke();
+				    </script>
+				  </div>
+
+				<div class="fragment">
+					Isotropic diffusion
+				</div>
+				<video width="600" autoplay loop>
+				  <source src="./images/diffusion-isotropic.mp4">
+				</video>
+
+			</section>
+
+			<section>
+				<h2>Diffusion MRI</h2>
+			<div class = "fragment fade-in" style="position: absolute">
+				<canvas id="arrows-aniso-vert" width="1000" height="1000">
+				</canvas>
+				    <script>
+				      context = document.getElementById('arrows-aniso-vert').getContext("2d");
+				      context.beginPath();
+					  canvas_arrow_two_heads(context, 250, 325, 250, 175);
+					context.lineWidth = 2;
+				      context.stroke();
+				    </script>
+				  </div>
+				<div class = "fragment fade-in" style="position: absolute">
+				<canvas id="arrows-aniso-horiz" width="1000" height="1000">
+				</canvas>
+				    <script>
+				      context = document.getElementById('arrows-aniso-horiz').getContext("2d");
+				      context.beginPath();
+					  canvas_arrow_two_heads(context, 370, 400, 610, 400);
+					  context.lineWidth = 2;
+				      context.stroke();
+				    </script>
+				  </div>
+
+				<div class="fragment">
+					Anisotropic diffusion
+				</div>
+				<video width="600" autoplay loop>
+				  <source src="./images/diffusion-anisotropic.mp4">
+				</video>
+			</section>
+
+	    	<section>
+
+				<div class = "fragment fade-out" style="position: absolute; left: 100px;">
+				<img src="./images/optic-radiation-postmortem.png" height="505" style="background:none; border:none; box-shadow:none;">
+				</div>
+
+				<div style="position: absolute; left: 500px;">
+				<img src="./images/nerve-fiber.png" height="505" style="background:none; border:none; box-shadow:none;">
+				</div>
+
+	    		<div class = "fragment fade-in" style="position: absolute">
+				<canvas id="fiber-arrow-horiz" width="1000" height="1000">
+				</canvas>
+				    <script>
+				      context = document.getElementById('fiber-arrow-horiz').getContext("2d");
+				      context.beginPath();
+					  canvas_arrow_two_heads(context, 630, 600, 800, 600);
+					  context.lineWidth = 2;
+				      context.stroke();
+				    </script>
+				  </div>
+				<div class = "fragment fade-in" style="position: absolute">
+				<canvas id="fiber-arrow-vert" width="1000" height="1000">
+				</canvas>
+				    <script>
+				      context = document.getElementById('fiber-arrow-vert').getContext("2d");
+				      context.beginPath();
+					  canvas_arrow_two_heads(context, 450, 100, 450, 400);
+					  context.lineWidth = 2;
+				      context.stroke();
+				    </script>
+				  </div>
+
+	    	</section>
+
+			<section>
+				<h2>Diffusion MRI</h2>
+				<video width="600" autoplay loop>
+				  <source src="./images/dMRI-signal-movie.mp4">
+				</video>
+			</section>
+
+			<section>
+			<h3>Modeling diffusion</h3>
+				<div class="fragment" style="position: absolute; left: -80px; top: 180px;">
+				<video width="400" autoplay loop>
+				  <source src="./images/tensor-signal-movie.mp4">
+				</video>
+				</div>
+				<div class="fragment">
+					<div style="position: absolute; top: 300px; left: 320px;" >
+					<image src="./images/q-form.png" style="background:none; border:none; box-shadow:none;" height="100">
+					</div>
+					<div style="position: absolute; left: 500px; top: 650px;" >
+						<small>Basser, Mattielo and Le Bihan (1994)</small>
+					</div>
+				</div>
+				<div class="fragment" style="position: absolute; top: 220px; left: 670px;">
+				<video width="400" autoplay loop>
+				  <source src="./images/tensor-ellipse-movie.mp4">
+				</video>
+				</div>
+			</section>
+
+			<section>
+				<h3>Diffusion statistics</h3>
+				<div class="fragment" style="position: absolute; left: 14px;">
+				<img src="images/tensor-stats1.png" height="400" style="background:none; border:none; box-shadow:none;" >
+				<div style="position: absolute; left: 75px; top: 420px;">
+					<small>Mean diffusivity</small>
+				</div>
+				<div style="position: absolute; left: -8px;">
+					<img src="images/md-scale.png" height="40" style="background:none; border:none; box-shadow:none;">
+				</div>
+				<div style="position: absolute; left: 222px; top:432px; ">
+					<img src="images/md-units.png" height="50" style="background:none; border:none; box-shadow:none;">
+				</div>
+				</div>
+				<div class="fragment fade-in" style="position: absolute; left: 7px;">
+				<img src="images/tensor-stats2.png" height="400" style="background:none; border:none; box-shadow:none;" >
+
+				<div style="position: absolute; left: 350px; top:432px; ">
+					<video width="200" autoplay loop>
+					<source src="./images/diffusion-fa-251.mov">
+				</div>
+
+				<div style="position: absolute; left: 350px; top: 420px;">
+					<small>Fractional anisotropy</small>
+				</div>
+
+				</div>
+				<div class="fragment fade-in" style="position: absolute; left: 0px;">
+				<img src="images/tensor-stats3.png" height="400" style="background:none; border:none; box-shadow:none;" >
+				<div style="position: absolute; left: 600px; top: 420px;">
+					<small>Principal diffusion direction</small>
+				</div>
+				<div style="position: absolute; left: 700px; top:432px; ">
+					<img src="images/axes.png" height="100" style="background:none; border:none; box-shadow:none;">
+				</div>
+				</div>
+				</section>
+
+			<section>
+				<h3>From diffusion to tracks</h3>
+				<div style="position: absolute; left: 210px;">
+				<img src="images/axial_slice.png" height="505">
+				</div>
+
+				<div class = "fragment fade-in" style="position: absolute;">
+
+				<canvas id="zoom-box" width="1000" height="1000"></canvas>
+				    <script>
+				      var canvas = document.getElementById('zoom-box');
+				      var context = canvas.getContext('2d');
+
+				      context.beginPath(430, 200);
+				      context.moveTo(430, 200);
+				      context.lineTo(430, 250);
+				      context.lineTo(480, 250);
+					  context.lineTo(480, 200);
+					  context.lineTo(430, 200);
+
+				      context.lineWidth = 2;
+
+				      // line color
+				      context.strokeStyle = 'white';
+				      context.stroke();
+				    </script>
+				  </div>
+			</section>
+
+			<section>
+				<h3>From diffusion to tracks</h3>
+				<div style="position: absolute;">
+				<img src="images/d2t-bkgrnd.png" style="background:none; border:none; box-shadow:none;" height="505", width="766">
+			</div>
+				<div class="fragment" style="position: absolute; left: 91px; top:58px;"><img src="images/tensor_ellipsoids.png" style="background:none; border:none; box-shadow:none; opacity:0.4; filter:alpha(opacity=40);">
+				</div>
+				<div class = "fragment fade-in" style="position: absolute;">
+				<canvas id="fiber" width="1000" height="1000"></canvas>
+				    <script>
+				      var canvas = document.getElementById('fiber');
+				      var context = canvas.getContext('2d');
+
+				      context.beginPath();
+				      context.moveTo(590, 170);
+				      context.bezierCurveTo(400, 300, 365, 80, 378, 65);
+				      context.lineWidth = 10;
+
+				      // line color
+				      context.strokeStyle = 'yellow';
+				      context.stroke();
+				    </script>
+				  </div>
+			</section>
+
+			<section>
+				<h3>From diffusion to tracks</h3>
+				<video width="600" autoplay loop>
+				  <source src="./images/cc_tube_movie-373.mov">
+				</video>
+			</section>
+
+			<section>
+				<h2> The elements of reproducible open research </h2>
+				<p>
+					Automation
+				</p>
+				<p>
+					Provenance tracking
+				</p>
+				<p>
+					Version control
+				</p>
+				<p>
+					Availability of data and code
+				<p>
+				<p>
+					Open publication
+				</p>
+			</section>
+
+			<section>
+				"An article about a computational result is advertising, not scholarship. The actual scholarship is the full software environment code and data, that produced the result"
+
+				Buckheit and Donoho (1995)
+				<br>
+				 <small>see <a href="http://biostatistics.oxfordjournals.org/content/11/3/385.long"> here</a></small>
+			</section>
+
+
+			<section>
+				<h2>Automate everything</h2>
+				<p>Can you produce all the figures in your paper with a single button press?</p>
+
+			</section>
+
+			<section>
+				<h2>Public availability of data and code</h2>
+			<h3>"Sharing" is caring</h3>
+			</section>
+
+			<section>
+
+				<h3><strike>"Sharing"</strike> is caring</h3>
+				<p class="fragment">
+					But what if you don't care? Or don't want to be altruistic?
+				</p>
+				<p class="fragment">
+					Let's call it "publishing" instead
+				</p>
+			</section>
+
+			<section>
+				 <h3>Reasons that data <strike>sharing</strike> publication is important</h3>
+				 <small>Based on <a href="http://journal.frontiersin.org/article/10.3389/fninf.2012.00009/abstract">Poline et al. (2012)</a></small>
+				 <p class="fragment">
+					 Accelerate progress in your field
+ 				 </p>
+				 <p class="fragment">
+					 Many fields have already demonstrated the benefits:
+					 Astronomy, Genomics are examples
+				</p>
+				<p class="fragment">
+					Improve the quality of publications, and of the data
+				</p>
+				<p class="fragment">
+					Reduce the cost of research, and increase ROI
+				</p>
+				<p class="fragment">
+					Reproducibility
+				</p>
+			 </section>
+
+			 <section>
+			 	 <h3>Reasons that data <strike>sharing</strike> publication is important</h3>
+			 	 <small>Based on <a href="http://journal.frontiersin.org/article/10.3389/fninf.2012.00009/abstract">Poline et al. (2012)</a></small>
+			 	 <p>
+			 		 Accelerate progress in understanding the brain
+			 	 </p>
+			 	 <p >
+			 		 Other fields have already demonstrated the benefits:
+			 		 Astronomy, Genomics are examples
+			 	</p>
+			 	<p>
+			 		Improve the quality of publications, and of the data
+			 	</p>
+			 	<p >
+			 		Reduce the cost of research, and increase ROI
+			 	</p>
+			 	<p>
+			 		Reproducibility
+			 	</p>
+				<h4>For all these reasons - funding agencies/journals are going to increasingly require that you do it! </h4>
+				</section>
+
+			 <section>
+				 <h3>A few more “selfish” benefits</h3>
+
+				<a href="https://peerj.com/articles/175/">Get cited more</a>: The “data sharing advantage”: ~10% more citations when data is shared (all else being equal).
+				<p class="fragment">
+				This is really just a way of saying that the research is better and has more impact when the data is available.
+				<p class="fragment">
+				Similar effects when software is shared - a topic for a different day…
+				<h3 class="fragment">For the time being, people still think you’re somehow
+				being altruistic...</h3>
+			 </section>
+
+			 <section>
+				<h2>OK - sign me up! How do I do it?</h2>
+			</section>
+			 	<section>
+					<h3 > Make sure your data has a permanent URL</h3>
+					<p class="fragment">
+					<a href="https://researchworks.lib.washington.edu/" href=>Researchworks </a> <br><small>(is going to be superseded soon by Data Repository)</small>
+					</p>
+					<p class="fragment">
+					<a href="http://figshare.com" href=>Figshare</a>
+					<br>
+					Files up to 500 MB can be deposited here
+					</p>
+				</section>
+				<section>
+					<h2>
+						Provide code that makes your data use(ful/able)
+					</h2>
+				</section>
+
+				<section>
+					<h2> License your data</h2>
+
+						Data without a license cannot be used!
+
+						<p class="fragment">
+							Consider licenses available through <a href="http://creativecommons.org/">Creative Commons</a>
+						</p>
+						<small class="fragment"> Much more <a href=http://www.dcc.ac.uk/resources/how-guides/license-research-data>here</a></small>
+					</section>
+
+			<section>
+					<h2>Start thinking about data sharing at the <em>start</em></h2>
+					<p class="fragment">Make sure your IRB approval and consent forms include data "sharing"<p>
+					<p class="fragment"> 	<a href="https://open-brain-consent.readthedocs.org/en/latest/">Open brain consent makes it easy</p>
+					<p class="fragment">Use the <a href="http://bids.neuroimaging.io/">Brain Imaging Data Structure</a> to structure your data even before you analyze it:<br>
+						<p class="fragment">
+						- A common exchange format that lives in your file-system.
+						<p class="fragment">
+						- Will facilitate data-sharing in different databases.
+						<p class="fragment">
+						- Will facilitate development of common analysis tools.
+					<p class="fragment">
+						Use the <a href="http://incf.github.io/bids-validator/">automated validator</a> to make sure your format is compliant
+					</p>
+			</section>
+
+			<section>
+				<img src="images/bids-example.png" height=600 px alt="BIDS example" align="middle">
+			</section>
+
+			<section>
+				<h3>If you create a unique dataset:<h3>
+					Consider publishing a <a href="http://journal.frontiersin.org/article/10.3389/fnins.2013.00009">data paper</a>!
+			</section>
+
+			 <section>
+ 				<div style="position:absolute; left: 220px; top:-50px;">
+ 				<img src="images/globe-xxl.png" width="100px;" style="background:none; border:none; box-shadow:none;">
+ 				<div style="position:absolute; left: 120px; top:40px;">http://arokem.org
+ 				</div>
+ 				</div>
+ 				<div style="position:absolute; left: 220px; top:70px;">
+ 				<img src="images/email-11-xxl.png" width="100px;" style="background:none; border:none; box-shadow:none;">
+ 				<div style="position:absolute; left: 120px; top:40px;">arokem@gmail.com
+ 				</div>
+ 				</div>
+ 				<div style="position:absolute; left: 220px; top:190px;">
+ 				<img src="images/twitter-xxl.png" width="100px;" style="background:none; border:none; box-shadow:none;">
+ 				<div style="position:absolute; left: 120px; top:40px;">@arokem
+ 				</div>
+ 				</div>
+ 				<div style="position:absolute; left: 220px; top:310px;">
+ 				<img src="images/github-6-xxl.png" width="100px;" style="background:none; border:none; box-shadow:none;">
+ 				<div style="position:absolute; left: 120px; top:40px;">github.com/arokem
+ 				</div>
+ 				</div>
+ 				</section>
+		</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
